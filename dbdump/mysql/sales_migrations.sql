@@ -16,13 +16,13 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Dumping data for table `employees`
+-- Dumping data for table `migrations`
 --
 
-LOCK TABLES employees WRITE;
-/*!40000 ALTER TABLE `employees` DISABLE KEYS */;
-INSERT INTO employees VALUES (1,'Sam',NULL,NULL),(2,'Kate',NULL,NULL),(3,'Blake',NULL,NULL),(4,'Kate',NULL,NULL),(5,'Jim',NULL,NULL),(6,'Patty',NULL,NULL);
-/*!40000 ALTER TABLE `employees` ENABLE KEYS */;
+LOCK TABLES `migrations` WRITE;
+/*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
+INSERT INTO `migrations` VALUES (2,'2020_08_05_014430_create_sales_table',1),(3,'2020_08_05_074948_create_products_table',2),(4,'2020_08_05_075526_create_customers_table',3),(5,'2020_08_05_093141_create_employees_table',4);
+/*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -34,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-08-06  4:01:36
+-- Dump completed on 2020-08-06  4:01:37
