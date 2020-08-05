@@ -42,10 +42,8 @@ class SaleController extends Controller
         $endDate =date($request->input('endDate'));
 
         $sales = DB::table('sales')
-                        ->select('date', 'products.price', 'customers.full_name', 'employees.name')
+                        ->select('date', 'products.price', 'sales.customer_name', 'sales.sales_person')
                         ->join('products', 'sales.product_name', '=', 'products.name')
-                        ->join('customers', 'sales.customer_name', '=', 'customers.full_name')
-                        ->join('employees', 'sales.sales_person', '=', 'employees.name')
                         ->whereBetween('date', [$startDate, $endDate])
                         ->get();
         
@@ -56,13 +54,14 @@ class SaleController extends Controller
         foreach ($sales as $key => $sale) {
             $record = [
                 'key' => $key,
-                'customer' => $sale->full_name,
-                'employee' => $sale->name,
-                'price' => $sale->price
+                'customer' => $sale->customer_name,
+                'employee' => $sale->sales_person,
+                'price' => $sale->price,
+                'date' => $sale->date
             ];
             array_push($data, $record);
-            array_push($customers, $sale->full_name);
-            array_push($employees, $sale->name);
+            array_push($customers, $sale->customer_name);
+            array_push($employees, $sale->sales_person);
          }
 
          $customers = array_unique($customers);
