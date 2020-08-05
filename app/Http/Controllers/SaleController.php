@@ -12,25 +12,24 @@ class SaleController extends Controller
         $startDate = date($request->input('startDate'));
         $endDate =date($request->input('endDate'));
 
+        // get sales based on date range
         $sales = DB::table('sales')
                         ->select('date', DB::raw('SUM(products.price) as total'))
                         ->join('products', 'sales.product_name', '=', 'products.name')
                         ->whereBetween('date', [$startDate, $endDate])
                         ->groupBy('date')
                         ->get();
-
        
         $category = [];
         $value = [];       
-        
+
+        // generate line chart data
         foreach ($sales as $sale) {
             array_push($category, $sale->date);
             array_push($value, $sale->total);
          }
 
-
-
-       return json_encode([
+       return response()->json([
            'category' => $category,
            'value' => $value
        ]);
@@ -41,6 +40,7 @@ class SaleController extends Controller
         $startDate = date($request->input('startDate'));
         $endDate =date($request->input('endDate'));
 
+        // get sales based on date range
         $sales = DB::table('sales')
                         ->select('date', 'products.price', 'sales.customer_name', 'sales.sales_person')
                         ->join('products', 'sales.product_name', '=', 'products.name')
@@ -59,17 +59,19 @@ class SaleController extends Controller
                 'price' => $sale->price,
                 'date' => $sale->date
             ];
-            array_push($data, $record);
+            array_push($data, $record); // grid data
             array_push($customers, $sale->customer_name);
             array_push($employees, $sale->sales_person);
          }
 
+         // get unique comstomers and employees
          $customers = array_unique($customers);
          $employees = array_unique($employees);
 
          $customerFilters = [];
          $employeeFilters = [];
 
+         // generate customer filters
          foreach ($customers as $customer) {
              $filter = [
                  'text' => $customer,
@@ -79,6 +81,7 @@ class SaleController extends Controller
              array_push($customerFilters, $filter);
          }
 
+         // generate employee filters
          foreach ($employees as $employee) {
             $filter = [
                 'text' => $employee,
@@ -87,10 +90,7 @@ class SaleController extends Controller
             array_push($employeeFilters, $filter);
         }
 
-
-
-
-        return json_encode([
+        return  response()->json([
             'gridData' => $data,
             'customerFilters' => $customerFilters,
             'employeeFilters' => $employeeFilters

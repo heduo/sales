@@ -18,7 +18,9 @@ Route::get('/', function () {
     return view('pages.index');
 });
 
+// request for line chart 
 Route::get('/sales', 'SaleController@salesChart');
 
+// request for data grid
 Route::get('/datagrid', 'SaleController@dataGrid');
 
