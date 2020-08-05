@@ -15,45 +15,19 @@
   </div>
 </template>
 <script>
-function formatDate(date) {
-  return (
-    formatDateComponent(date.getMonth() + 1) +
-    "/" +
-    formatDateComponent(date.getDate()) +
-    "/" +
-    date.getFullYear()
-  );
-}
 
-function formatDateComponent(dateComponent) {
-  return (dateComponent < 10 ? "0" : "") + dateComponent;
-}
-
-function formatDateForDB(dateStr) {
-  const date = dateStr.split("/");
-  const month = date[0];
-  const day = date[1];
-  const year = date[2];
-
-  return year + "-" + month + "-" + day;
-}
+import helper from "../helper";
 
 function onChange(pagination, filters, sorter) {
-  console.log("params", pagination, filters, sorter);
+  // console.log("params", pagination, filters, sorter);
 }
 
 export default {
   data() {
-    var now = new Date();
-    var prevMonthLastDate = new Date(now.getFullYear(), now.getMonth(), 0);
-    var prevMonthFirstDate = new Date(
-      now.getFullYear() - (now.getMonth() > 0 ? 0 : 1),
-      (now.getMonth() - 1 + 12) % 12,
-      1
-    );
-
-    var startDate = formatDate(prevMonthFirstDate);
-    var endDate = formatDate(prevMonthLastDate);
+     // get last month date range
+    var lastMonthRange = helper.getLastMonthRange();
+    var startDate = lastMonthRange.startDate;
+    var endDate = lastMonthRange.endDate;
     return {
       gridData: null,
       columns: null,
@@ -62,8 +36,8 @@ export default {
   },
 
   mounted() {
-    var startDate = formatDateForDB(this.dateRange.startDate);
-    var endDate = formatDateForDB(this.dateRange.endDate);
+    var startDate = helper.formatDateForDB(this.dateRange.startDate);
+    var endDate = helper.formatDateForDB(this.dateRange.endDate);
     var self = this.$data;
     axios
       .get("/datagrid", {
@@ -104,7 +78,6 @@ export default {
           },
         ];
         self.columns = columns;
-        
       })
       .catch(function (error) {
         console.log(error);
