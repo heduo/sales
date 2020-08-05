@@ -19,10 +19,6 @@
 <script>
 import helper from "../helper";
 
-function onChange(pagination, filters, sorter) {
-  // console.log("params", pagination, filters, sorter);
-}
-
 function updateFilters(customerFilters, employeeFilters ) {
    return [
           {
