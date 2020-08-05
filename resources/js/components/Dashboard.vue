@@ -8,7 +8,6 @@
       format="yyyy-mm-dd"
       v-model="dateRange"
       @update="updateValues"
-      @toggle="checkOpen"
     ></date-range-picker>
     <div class="chart-area" id="salesChart"></div>
   </div>
@@ -17,6 +16,32 @@
 <script>
 // import helper functions
 import helper from "../helper";
+
+/**
+ * fetch sales data based on date range, then draw new line chart
+ * @param {string} startDate 
+ * @param {string} endDate 
+ */
+function fetchSalesData(startDate, endDate) {
+   axios
+      .get("/sales", {
+        params: {
+          startDate: startDate,
+          endDate: endDate,
+        },
+      })
+      .then(function (response) {
+        var data = response.data;
+        // draw sales line chart with response data
+        helper.drawSalesChart(data.category, data.value, "salesChart");
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+      .then(function () {
+        // always executed
+      });
+}
 
 export default {
   data() {
@@ -39,25 +64,7 @@ export default {
     var startDate = helper.formatDateForDB(this.dateRange.startDate);
     var endDate = helper.formatDateForDB(this.dateRange.endDate);
 
-    axios
-      .get("/sales", {
-        params: {
-          startDate: startDate,
-          endDate: endDate,
-        },
-      })
-      .then(function (response) {
-        var data = response.data;
-
-        // draw sales line chart with response data
-        helper.drawSalesChart(data.category, data.value, "salesChart");
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
-      .then(function () {
-        // always executed
-      });
+    fetchSalesData(startDate, endDate);
   },
 
   methods: {
@@ -65,26 +72,9 @@ export default {
     updateValues() {
       var startDate = helper.formatDateForDB(helper.formatDate(this.dateRange.startDate));
       var endDate = helper.formatDateForDB(helper.formatDate(this.dateRange.endDate));
-    // send request for sales data based on date range
-      axios
-        .get("/sales", {
-          params: {
-            startDate: startDate,
-            endDate: endDate,
-          },
-        })
-        .then(function (response) {
-          var data = response.data;
-          helper.drawSalesChart(data.category, data.value, "salesChart");
-        })
-        .catch(function (error) {
-          console.log("error");
-        })
-        .then(function () {
-          // always executed
-        });
-    },
-    checkOpen() {},
+      fetchSalesData(startDate, endDate);
+    }
+   
   },
 };
 </script>

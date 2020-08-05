@@ -7,6 +7,12 @@ use Illuminate\Support\Facades\DB;
 
 class SaleController extends Controller
 {
+    /**
+     * fetch data for sales line chart
+     *
+     * @param Request $request
+     * @return object response 
+     */
     public function salesChart(Request $request)
     {
         $startDate = date($request->input('startDate'));
@@ -35,6 +41,12 @@ class SaleController extends Controller
        ]);
     }
 
+    /**
+     * fetch data for data grid
+     *
+     * @param Request $request
+     * @return object response
+     */
     public function dataGrid(Request $request)
     {
         $startDate = date($request->input('startDate'));

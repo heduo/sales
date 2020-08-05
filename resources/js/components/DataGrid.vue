@@ -9,8 +9,10 @@
       v-model="dateRange"
       @update="updateValues"
     ></date-range-picker>
+    <br>
+    <br>
     <div>
-      <a-table :columns="columns" :data-source="gridData" @change="onChange" />
+      <a-table :columns="columns" :data-source="gridData" />
     </div>
   </div>
 </template>
@@ -95,12 +97,11 @@ export default {
     var startDate = helper.formatDateForDB(this.dateRange.startDate);
     var endDate = helper.formatDateForDB(this.dateRange.endDate);
     var self = this.$data;
-  
+    // create data grid
     createDataGrid(startDate, endDate, self);
   },
 
   methods: {
-    onChange,
     updateValues() {
       var startDate = helper.formatDateForDB(
         helper.formatDate(this.dateRange.startDate)
@@ -109,6 +110,7 @@ export default {
         helper.formatDate(this.dateRange.endDate)
       );
 
+      // create new data grid
       var self = this.$data;
        createDataGrid(startDate, endDate, self);
     },
