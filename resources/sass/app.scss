@@ -53,3 +53,9 @@ body{
    min-width: 500px !important;
    min-height: 300px !important;
 }
+
+.router-link-exact-active {
+    color: #495057 !important;
+    background-color: #f8fafc !important;
+    border-color: #dee2e6 #dee2e6 #f8fafc !important;
+}
