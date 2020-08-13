@@ -29,12 +29,12 @@ import Dashboard from './components/Dashboard.vue';
 import DataGrid from './components/DataGrid.vue';
 import DateRangePicker from 'vue2-daterange-picker';
 import 'vue2-daterange-picker/dist/vue2-daterange-picker.css';
-import Chartkick from 'vue-chartkick'
-import Chart from 'chart.js'
+// import Chartkick from 'vue-chartkick'
+// import Chart from 'chart.js'
 import { Table } from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 
-Vue.use(Chartkick.use(Chart))
+// Vue.use(Chartkick.use(Chart))
 
 
 Vue.component('dashboard',Dashboard);
