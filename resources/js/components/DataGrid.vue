@@ -19,7 +19,7 @@
 <script>
 import helper from "../helper";
 
-function updateFilters(customerFilters, employeeFilters ) {
+function createColumns(customerFilters, employeeFilters ) {
    return [
           {
             title: "Employee",
@@ -66,7 +66,7 @@ function createDataGrid(startDate, endDate, vm) {
          vm.$message.destroy(); // destroy loading message once fetch data successfully
         var res = response.data;
         vm.gridData = res.gridData;
-        var columns = updateFilters(res.customerFilters, res.employeeFilters);
+        var columns = createColumns(res.customerFilters, res.employeeFilters);
         vm.columns = columns;
       })
       .catch(function (error) {
