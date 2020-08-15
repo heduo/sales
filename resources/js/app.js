@@ -29,19 +29,23 @@ import Dashboard from './components/Dashboard.vue';
 import DataGrid from './components/DataGrid.vue';
 import DateRangePicker from 'vue2-daterange-picker';
 import 'vue2-daterange-picker/dist/vue2-daterange-picker.css';
-// import Chartkick from 'vue-chartkick'
-// import Chart from 'chart.js'
-import { Table } from 'ant-design-vue';
+
+import { Table, Spin, message} from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 
-// Vue.use(Chartkick.use(Chart))
+
 
 
 Vue.component('dashboard',Dashboard);
 Vue.component('data-grid',DataGrid);
 Vue.component('date-range-picker',DateRangePicker);
 Vue.component(Table.name, Table);
+Vue.component(Spin.name, Spin);
 
+Vue.prototype.$message = message;
+Vue.prototype.$message.config({
+    top:'20%'
+});
 
 
 /** Routes */

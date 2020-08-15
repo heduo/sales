@@ -63,6 +63,7 @@ function createDataGrid(startDate, endDate, vm) {
         },
       })
       .then(function (response) {
+         vm.$message.destroy(); // destroy loading message once fetch data successfully
         var res = response.data;
         vm.gridData = res.gridData;
         var columns = updateFilters(res.customerFilters, res.employeeFilters);
@@ -88,7 +89,8 @@ export default {
       dateRange: { startDate, endDate },
       localeData: {
         format:'yyyy-mm-dd'
-        }
+        },
+      fetchSalesSuccess: false
     };
   },
 
@@ -101,9 +103,10 @@ export default {
       var startDate = helper.formatDateForDB(this.dateRange.startDate);
       var endDate = helper.formatDateForDB(this.dateRange.endDate);
 
+      this.$message.loading('Fetching data', 0); // loading message
       // create new data grid
-      var self = this.$data;
-       createDataGrid(startDate, endDate, self);
+      var vm = this; // store reference of vue model 
+       createDataGrid(startDate, endDate, vm);
     },
   },
 };
