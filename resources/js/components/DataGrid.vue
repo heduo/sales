@@ -32,7 +32,7 @@ function createColumns(customerFilters, employeeFilters ) {
             sortDirections: ["descend", "ascend"],
           },
           {
-            title: "Price",
+            title: "Price (AUD)",
             dataIndex: "price",
             sorter: (a, b) => a.price > b.price ? 1 : -1,
              sortDirections: ["descend", "ascend"],
