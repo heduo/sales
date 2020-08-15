@@ -64,22 +64,23 @@
           },
           tooltip: {
             trigger: "axis",
+            formatter: '{b} <br/> A$ {c}' // string template: {b} for category name(date), {c} for data value 
           },
           xAxis: {
             type: "category",
-            data: category,
+            data: category, // category name
           },
           yAxis: {
             type: "value",
             axisLabel: {
               formatter: function (val) {
-                return val;
+                return 'A$ ' + val; 
               },
             },
           },
           series: [
             {
-              data: value,
+              data: value, // data value
               type: "line",
             },
           ],
