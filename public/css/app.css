@@ -10942,7 +10942,6 @@ body {
 }
 
 .footer {
-  position: absolute;
   bottom: 0;
   width: 100%;
   height: 60px;
@@ -10971,5 +10970,11 @@ body {
   margin-top: 30px !important;
   min-width: 500px !important;
   min-height: 300px !important;
+}
+
+.router-link-exact-active {
+  color: #495057 !important;
+  background-color: #f8fafc !important;
+  border-color: #dee2e6 #dee2e6 #f8fafc !important;
 }
 

@@ -27,17 +27,20 @@ class SaleController extends Controller
                         ->get();
        
         $category = [];
-        $value = [];       
+        $value = [];
+        $total = 0;       
 
         // generate line chart data
         foreach ($sales as $sale) {
             array_push($category, $sale->date);
             array_push($value, $sale->total);
+            $total += $sale->total;
          }
 
        return response()->json([
            'category' => $category,
-           'value' => $value
+           'value' => $value,
+           'total' => $total
        ]);
     }
 
@@ -57,6 +60,7 @@ class SaleController extends Controller
                         ->select('date', 'products.price', 'sales.customer_name', 'sales.sales_person')
                         ->join('products', 'sales.product_name', '=', 'products.name')
                         ->whereBetween('date', [$startDate, $endDate])
+                        ->orderBy('date', 'desc') // improve_2 : sort by date
                         ->get();
         
         $data = [];

@@ -1,19 +1,5 @@
 
   export default {
-      /**
-       *  convert a date object to 'mm/dd/yyyy' date string
-       * @param {Object} date date object
-       */
-     formatDate: function(date) {
-        return (
-            this.formatDateComponent(date.getMonth() + 1) +
-            "/" +
-            this.formatDateComponent(date.getDate()) +
-            "/" +
-            date.getFullYear()
-        );
-    },
-     
     /**
      * pad '0' if neccessory, e.g '1/2/2020' => '01/02/2020'
      * @param {string} dateComponent 
@@ -34,36 +20,34 @@
             1
         );
     
-        var startDate = this.formatDate(prevMonthFirstDate);
-        var endDate = this.formatDate(prevMonthLastDate);
-    
         return {
-            startDate:startDate,
-            endDate:endDate
+            startDate:prevMonthFirstDate,
+            endDate:prevMonthLastDate
         };
     },
     
     /**
-     * format a date string 'mm/dd/yyyy' to 'yyyy-mm-dd' for database use
-     * 
-     * @param {string} dateStr 
+     * format a date obj to 'yyyy-mm-dd' for database use
+     *
+     * @param {string} dateObj
      */
-     formatDateForDB : function(dateStr) {
-        const date = dateStr.split("/");
-        const month = date[0];
-        const day = date[1];
-        const year = date[2];
-      
-        return year + "-" + month + "-" + day;
+     dateObjToString : function(dateObj, format='yyyy-mm-dd') {
+
+        const month = this.formatDateComponent(dateObj.getMonth() + 1);
+        const date =this.formatDateComponent(dateObj.getDate());
+        const year = dateObj.getFullYear()
+
+        if (format === 'yyyy-mm-dd') {
+          return year + "-" + month + "-" + date;
+        }
       },
 
       /**
        * Draw sales line chart
-       * @param {array} category axis x values
-       * @param {array} value axis y values
+       * @param {object} data axis x values
        * @param {string} elId element id
        */
-       drawSalesChart: function(category, value, elId) {
+       drawSalesChart: function(data, elId) {
         // echarts
         var echarts = require("echarts");
       
@@ -72,27 +56,46 @@
         // chart option
         var option = {
           title: {
-            text: "Total sales per day",
-            subtext: value.length ? "" : "No records",
+            text: 'Total Sales by Day',
+            subtext: data.total ? "Total Amount: AU " + Number(data.total).toLocaleString('en-AU', {
+              style: 'currency',
+              currency: 'AUD'
+            }) : "No records",
+            subtextStyle: {
+              fontStyle: 'italic',
+              color: '#B03A5B'
+            }
           },
           tooltip: {
             trigger: "axis",
+            formatter: function (params) {
+              console.log(params);
+             // When trigger is 'axis', or when tooltip is triggered by axisPointer, params is the data array of multiple series.
+             // https://echarts.apache.org/en/option.html#tooltip.formatter
+              return params[0].name + '<br/>'+ 'AU ' + Number(params[0].data).toLocaleString('en-AU', {
+                style: 'currency',
+                currency: 'AUD'
+              });
+            }
           },
           xAxis: {
             type: "category",
-            data: category,
+            data: data.category, // category name
           },
           yAxis: {
             type: "value",
             axisLabel: {
-              formatter: function (val) {
-                return val;
-              },
+              formatter: function (value) {
+                return 'AU ' + Number(value).toLocaleString('en-AU', {
+                  style: 'currency',
+                  currency: 'AUD'
+                });
+              }
             },
           },
           series: [
             {
-              data: value,
+              data: data.value, // data value
               type: "line",
             },
           ],

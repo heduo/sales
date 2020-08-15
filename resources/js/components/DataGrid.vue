@@ -5,7 +5,7 @@
     <date-range-picker
       ref="picker"
       opens="right"
-      format="yyyy-mm-dd"
+      :localeData="localeData"
       v-model="dateRange"
       @update="updateValues"
     ></date-range-picker>
@@ -19,7 +19,7 @@
 <script>
 import helper from "../helper";
 
-function updateFilters(customerFilters, employeeFilters ) {
+function createColumns(customerFilters, employeeFilters ) {
    return [
           {
             title: "Employee",
@@ -32,7 +32,7 @@ function updateFilters(customerFilters, employeeFilters ) {
             sortDirections: ["descend", "ascend"],
           },
           {
-            title: "Price",
+            title: "Price (AUD)",
             dataIndex: "price",
             sorter: (a, b) => a.price > b.price ? 1 : -1,
              sortDirections: ["descend", "ascend"],
@@ -63,9 +63,10 @@ function createDataGrid(startDate, endDate, vm) {
         },
       })
       .then(function (response) {
+         vm.$message.destroy(); // destroy loading message once fetch data successfully
         var res = response.data;
         vm.gridData = res.gridData;
-        var columns = updateFilters(res.customerFilters, res.employeeFilters);
+        var columns = createColumns(res.customerFilters, res.employeeFilters);
         vm.columns = columns;
       })
       .catch(function (error) {
@@ -82,33 +83,31 @@ export default {
     var lastMonthRange = helper.getLastMonthRange();
     var startDate = lastMonthRange.startDate;
     var endDate = lastMonthRange.endDate;
+
     return {
       gridData: null,
       columns: null,
       dateRange: { startDate, endDate },
+      localeData: {
+        format:'yyyy-mm-dd'
+        },
+      fetchSalesSuccess: false
     };
   },
 
   mounted() {
-    var startDate = helper.formatDateForDB(this.dateRange.startDate);
-    var endDate = helper.formatDateForDB(this.dateRange.endDate);
-    var self = this.$data;
-    // create data grid
-    createDataGrid(startDate, endDate, self);
+    this.updateValues();
   },
 
   methods: {
     updateValues() {
-      var startDate = helper.formatDateForDB(
-        helper.formatDate(this.dateRange.startDate)
-      );
-      var endDate = helper.formatDateForDB(
-        helper.formatDate(this.dateRange.endDate)
-      );
+      var startDate = helper.dateObjToString(this.dateRange.startDate);
+      var endDate = helper.dateObjToString(this.dateRange.endDate);
 
+      this.$message.loading('Fetching data', 0); // loading message
       // create new data grid
-      var self = this.$data;
-       createDataGrid(startDate, endDate, self);
+      var vm = this; // store reference of vue model 
+       createDataGrid(startDate, endDate, vm);
     },
   },
 };
