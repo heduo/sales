@@ -37,7 +37,7 @@ function fetchSalesData(startDate, endDate, vm) {
        vm.$message.destroy(); // destroy loading message once fetch data successfully
         var data = response.data;
         // draw sales line chart with response data
-        helper.drawSalesChart(data.category, data.value, "salesChart");
+        helper.drawSalesChart(data, "salesChart");
       })
       .catch(function (error) {
         console.log(error);
