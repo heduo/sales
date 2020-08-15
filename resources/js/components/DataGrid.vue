@@ -83,6 +83,7 @@ export default {
     var lastMonthRange = helper.getLastMonthRange();
     var startDate = lastMonthRange.startDate;
     var endDate = lastMonthRange.endDate;
+
     return {
       gridData: null,
       columns: null,

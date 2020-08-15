@@ -59,7 +59,7 @@ export default {
       fetchSalesSuccess: false,
       localeData:{
         format:'yyyy-mm-dd'
-      },
+      }
     };
   },
 

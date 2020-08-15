@@ -27,31 +27,40 @@ Vue.use(VueRouter);
 
 import Dashboard from './components/Dashboard.vue';
 import DataGrid from './components/DataGrid.vue';
+import Header from './components/layouts/Header.vue';
+import Footer from './components/layouts/Footer.vue';
+import App from './App.vue';
 import DateRangePicker from 'vue2-daterange-picker';
 import 'vue2-daterange-picker/dist/vue2-daterange-picker.css';
 
-import { Table, Spin, message} from 'ant-design-vue';
+import { Table, message} from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 
+/**
+ * Component registration
+ */
 
+// self made components
+Vue.component('Dashboard',Dashboard);
+Vue.component('DataGrid',DataGrid);
+Vue.component('App', App)
+Vue.component('Footer', Footer);
+Vue.component('Header', Header);
 
+// third-party components
+Vue.component('date-range-picker',DateRangePicker); // vue2 date range picker
+Vue.component('a-table', Table); // ant design component
 
-Vue.component('dashboard',Dashboard);
-Vue.component('data-grid',DataGrid);
-Vue.component('date-range-picker',DateRangePicker);
-Vue.component(Table.name, Table);
-Vue.component(Spin.name, Spin);
-
+// attach ant-design's message component to protoype, so that all vue model can access it
 Vue.prototype.$message = message;
+// config for message component
 Vue.prototype.$message.config({
-    top:'20%'
+    top:'20%' // 20% from top
 });
 
-
 /** Routes */
-
 const routes = [
-    { path: '/', component: Dashboard},
+    { path: '/', component: Dashboard}, 
     { path: '/datagrid', component: DataGrid },
   ];
 
