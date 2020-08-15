@@ -31,17 +31,15 @@
      *
      * @param {string} dateObj
      */
-     formatDateForDB : function(dateObj) {
+     dateObjToString : function(dateObj, format='yyyy-mm-dd') {
+       
+        const month = this.formatDateComponent(dateObj.getMonth() + 1);
+        const date =this.formatDateComponent(dateObj.getDate());
+        const year = dateObj.getFullYear()
 
-      const month = this.formatDateComponent(dateObj.getMonth() + 1);
-      
-      const day =this.formatDateComponent(dateObj.getDate());
-    
-      const year = dateObj.getFullYear()
-
-      
-      
-        return year + "-" + month + "-" + day;
+        if (format === 'yyyy-mm-dd') {
+          return year + "-" + month + "-" + date;
+        }
       },
 
       /**

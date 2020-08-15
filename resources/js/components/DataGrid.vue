@@ -101,8 +101,8 @@ export default {
 
   methods: {
     updateValues() {
-      var startDate = helper.formatDateForDB(this.dateRange.startDate);
-      var endDate = helper.formatDateForDB(this.dateRange.endDate);
+      var startDate = helper.dateObjToString(this.dateRange.startDate);
+      var endDate = helper.dateObjToString(this.dateRange.endDate);
 
       this.$message.loading('Fetching data', 0); // loading message
       // create new data grid

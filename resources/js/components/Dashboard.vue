@@ -72,8 +72,8 @@ export default {
     updateValues() {
      this.$message.loading('Fetching data', 0); // loading message
       const vm = this; // store reference of vue model 
-      var startDate = helper.formatDateForDB(this.dateRange.startDate);
-      var endDate = helper.formatDateForDB(this.dateRange.endDate);
+      var startDate = helper.dateObjToString(this.dateRange.startDate);
+      var endDate = helper.dateObjToString(this.dateRange.endDate);
       fetchSalesData(startDate, endDate, vm);
 
     },
