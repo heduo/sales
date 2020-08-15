@@ -32,7 +32,7 @@
      * @param {string} dateObj
      */
      dateObjToString : function(dateObj, format='yyyy-mm-dd') {
-       
+
         const month = this.formatDateComponent(dateObj.getMonth() + 1);
         const date =this.formatDateComponent(dateObj.getDate());
         const year = dateObj.getFullYear()
@@ -44,11 +44,10 @@
 
       /**
        * Draw sales line chart
-       * @param {array} category axis x values
-       * @param {array} value axis y values
+       * @param {object} data axis x values
        * @param {string} elId element id
        */
-       drawSalesChart: function(category, value, elId) {
+       drawSalesChart: function(data, elId) {
         // echarts
         var echarts = require("echarts");
       
@@ -57,28 +56,46 @@
         // chart option
         var option = {
           title: {
-            text: "Total sales per day",
-            subtext: value.length ? "" : "No records",
+            text: 'Total Sales by Day',
+            subtext: data.total ? "Total Amount: AU " + Number(data.total).toLocaleString('en-AU', {
+              style: 'currency',
+              currency: 'AUD'
+            }) : "No records",
+            subtextStyle: {
+              fontStyle: 'italic',
+              color: '#B03A5B'
+            }
           },
           tooltip: {
             trigger: "axis",
-            formatter: '{b} <br/> A$ {c}' // string template: {b} for category name(date), {c} for data value 
+            formatter: function (params) {
+              console.log(params);
+             // When trigger is 'axis', or when tooltip is triggered by axisPointer, params is the data array of multiple series.
+             // https://echarts.apache.org/en/option.html#tooltip.formatter
+              return params[0].name + '<br/>'+ 'AU ' + Number(params[0].data).toLocaleString('en-AU', {
+                style: 'currency',
+                currency: 'AUD'
+              });
+            }
           },
           xAxis: {
             type: "category",
-            data: category, // category name
+            data: data.category, // category name
           },
           yAxis: {
             type: "value",
             axisLabel: {
-              formatter: function (val) {
-                return 'A$ ' + val; 
-              },
+              formatter: function (value) {
+                return 'AU ' + Number(value).toLocaleString('en-AU', {
+                  style: 'currency',
+                  currency: 'AUD'
+                });
+              }
             },
           },
           series: [
             {
-              data: value, // data value
+              data: data.value, // data value
               type: "line",
             },
           ],
