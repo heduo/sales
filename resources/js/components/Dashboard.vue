@@ -5,9 +5,9 @@
     <date-range-picker
       ref="picker"
       opens="right"
-      format="yyyy-mm-dd"
       v-model="dateRange"
       @update="updateValues"
+      :localeData="localeData"
     ></date-range-picker>
     <div class="chart-area" id="salesChart"></div>
   </div>
@@ -56,24 +56,23 @@ export default {
         category: null,
         value: null,
       },
+      localeData:{
+        format:'yyyy-mm-dd'
+      }
     };
   },
 
   mounted() {
-    // send request for sales data based on date range
-    var startDate = helper.formatDateForDB(this.dateRange.startDate);
-    var endDate = helper.formatDateForDB(this.dateRange.endDate);
-
-    fetchSalesData(startDate, endDate);
+    this.updateValues();
   },
 
   methods: {
     // handle date range update
     updateValues() {
-      var startDate = helper.formatDateForDB(helper.formatDate(this.dateRange.startDate));
-      var endDate = helper.formatDateForDB(helper.formatDate(this.dateRange.endDate));
+      var startDate = helper.formatDateForDB(this.dateRange.startDate);
+      var endDate = helper.formatDateForDB(this.dateRange.endDate);
       fetchSalesData(startDate, endDate);
-    }
+    },
    
   },
 };

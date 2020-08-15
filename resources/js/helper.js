@@ -1,19 +1,5 @@
 
   export default {
-      /**
-       *  convert a date object to 'mm/dd/yyyy' date string
-       * @param {Object} date date object
-       */
-     formatDate: function(date) {
-        return (
-            this.formatDateComponent(date.getMonth() + 1) +
-            "/" +
-            this.formatDateComponent(date.getDate()) +
-            "/" +
-            date.getFullYear()
-        );
-    },
-     
     /**
      * pad '0' if neccessory, e.g '1/2/2020' => '01/02/2020'
      * @param {string} dateComponent 
@@ -34,25 +20,26 @@
             1
         );
     
-        var startDate = this.formatDate(prevMonthFirstDate);
-        var endDate = this.formatDate(prevMonthLastDate);
-    
         return {
-            startDate:startDate,
-            endDate:endDate
+            startDate:prevMonthFirstDate,
+            endDate:prevMonthLastDate
         };
     },
     
     /**
-     * format a date string 'mm/dd/yyyy' to 'yyyy-mm-dd' for database use
-     * 
-     * @param {string} dateStr 
+     * format a date obj to 'yyyy-mm-dd' for database use
+     *
+     * @param {string} dateObj
      */
-     formatDateForDB : function(dateStr) {
-        const date = dateStr.split("/");
-        const month = date[0];
-        const day = date[1];
-        const year = date[2];
+     formatDateForDB : function(dateObj) {
+
+      const month = this.formatDateComponent(dateObj.getMonth() + 1);
+      
+      const day =this.formatDateComponent(dateObj.getDate());
+    
+      const year = dateObj.getFullYear()
+
+      
       
         return year + "-" + month + "-" + day;
       },
