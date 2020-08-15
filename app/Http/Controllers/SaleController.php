@@ -57,6 +57,7 @@ class SaleController extends Controller
                         ->select('date', 'products.price', 'sales.customer_name', 'sales.sales_person')
                         ->join('products', 'sales.product_name', '=', 'products.name')
                         ->whereBetween('date', [$startDate, $endDate])
+                        ->orderBy('date', 'desc') // improve_2 : sort by date
                         ->get();
         
         $data = [];
