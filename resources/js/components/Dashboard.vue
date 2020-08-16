@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container main">
     <br />
     <div>Please select date range</div>
     <date-range-picker
