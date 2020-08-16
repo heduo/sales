@@ -10942,7 +10942,8 @@ body {
 }
 
 .footer {
-  position: absolute;
+  position: fixed;
+  margin-bottom: 70px;
   bottom: 0;
   width: 100%;
   height: 60px;
