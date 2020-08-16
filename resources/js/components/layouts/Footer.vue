@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer" :style="{'position':position}">
+  <footer class="footer row" :style="{'position':position}">
     <div class="container">
       <p class="float-left">
         Design by

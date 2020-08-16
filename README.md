@@ -94,3 +94,5 @@ Schema::create('employees', function (Blueprint $table) {
 1. System Internal Exception
 2. Invalid Request Exception
 3. Feedbacks to Users
+
+###### 4.3 Responsive UI design
