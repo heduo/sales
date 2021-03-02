@@ -1,7 +1,7 @@
 
 ##### 1. Dump scripts : 'dbdump/mysql'
-##### 2. Initial   ersion (master branch) : https://salty-thicket-11905.herokuapp.com
-##### 3. Improved version (dev branch) : https://tranquil-caverns-45960.herokuapp.com
+##### 2. Initial   ersion (master branch) : https://salty-thicket-11905.herokuapp.com (Please pick ranges before AUG 2020, because no sales data after July 2020)
+##### 3. Improved version (dev branch) : https://tranquil-caverns-45960.herokuapp.com (Please pick ranges before AUG 2020, because no sales data after July 2020)
    - refactor date formatting related code (reduce repetition)
      - unify date format in <strong>"date-range-picker"</strong> component to be <strong>'yyyy-mm-dd'</strong>, no date is in format 'mm/dd/yyyy' any more, compared to initial version
      - only one date formatting function would be used, which is <strong>dateObjToString (obj, format='yyyy-mm-dd') => string</strong>
